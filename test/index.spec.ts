@@ -3,19 +3,22 @@ import { take, map, delay } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import * as RxMock from 'rxjs';
 import polling from '../index';
-import matchers from 'jest-matchers/build/matchers';
+import { matcherHint, printReceived, printExpected } from 'jest-matcher-utils';
 import { diffTestMessages } from './utils';
 
-/**
- * Simple Matcher which uses Jest nice diffs messages. Original `.toEqual` is not
- * suitable because we'll pass it to TestScheduler and it must throw on error.
- */
-function assertDeepEqual(actual, expected) {
-  const result = matchers.toEqual(actual, expected);
 
-  if (!result.pass) {
-    const diff = diffTestMessages(result.actual, result.expected);
-    throw diff + '\n' + result.message();
+function assertDeepEqual(actual: any, expected: any): any {
+  try {
+    expect(actual).toEqual(expected);
+  } catch (error) {
+    const hint = matcherHint('.toEqual', undefined, undefined, { isNot: false });
+    const diffString = diffTestMessages(expected, actual);
+
+    const errorMessage = () => {
+      return `${hint}\n\nExpected: ${printExpected(expected)}\nReceived: ${printReceived(actual)}\n${diffString}`;
+    };
+
+    throw new Error(errorMessage());
   }
 }
 

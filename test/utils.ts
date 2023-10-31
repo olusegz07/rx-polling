@@ -1,8 +1,7 @@
 import repeat from 'lodash/repeat';
-import { TestMessage } from 'rxjs/internal/testing/TestMessage';
-import { Notification } from 'rxjs/internal/Notification';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Notification } from 'rxjs';
 import chalk from 'chalk';
+import { TestMessage } from 'rxjs/internal/testing/TestMessage';
 
 function notificationToMarble(notification: Notification<any>): string {
   if (notification.kind === 'N') return notification.value || 'x';
@@ -15,7 +14,7 @@ function testMessagesToMarbles(messages: TestMessage[]): string {
   const marbles = messages.reduce((prevMarbles, message, index) => {
     const prevMessage = index === 0 ? { frame: 0 } : messages[index - 1];
     const frames = message.frame - prevMessage.frame;
-    let valueMarble = notificationToMarble(message.notification);
+    let valueMarble = notificationToMarble(message[0].notification);
 
     const nextMessages = index === messages.length - 1 ? { frame: Infinity } : messages[index + 1];
     const isGroupedWithNext = nextMessages.frame - message.frame === 0;
