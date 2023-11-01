@@ -44,4 +44,4 @@ export interface IOptions {
  * @param request$ Source Observable which will be ran every interval
  * @param userOptions Polling options
  */
-export default function polling<T>(request$: Observable<T>, userOptions: IOptions): Observable<T>;
+export declare function polling<T>(request$: Observable<T>, userOptions: IOptions): Observable<T>;

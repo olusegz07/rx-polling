@@ -62,7 +62,7 @@ const defaultOptions: Partial<IOptions> = {
  * @param request$ Source Observable which will be ran every interval
  * @param userOptions Polling options
  */
-export default function polling<T>(request$: Observable<T>, userOptions: IOptions): Observable<T> {
+export function polling<T>(request$: Observable<T>, userOptions: IOptions): Observable<T> {
   const options = Object.assign({}, defaultOptions, userOptions);
 
   /**

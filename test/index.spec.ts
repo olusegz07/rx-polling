@@ -2,7 +2,7 @@ import { Observable, of, timer, interval, throwError, Observer } from 'rxjs';
 import { take, map, delay } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import * as RxMock from 'rxjs';
-import polling from '../index';
+import { polling } from '../index';
 import { matcherHint, printReceived, printExpected } from 'jest-matcher-utils';
 import { diffTestMessages } from './utils';
 
