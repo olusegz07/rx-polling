@@ -4,10 +4,10 @@
         "declaration": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "lib": ["dom", "es2015", "es2016"],
+        "lib": ["dom", "es2015", "es2016", "es2020"],
         "module": "commonjs",
         "outDir": "./lib",
-        "target": "es5",
+        "target": "es2020",
         "baseUrl": ".",
         "paths": {}
     },
