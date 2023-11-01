@@ -89,7 +89,7 @@ export default function polling<T>(request$: Observable<T>, userOptions: IOption
           retryWhen(errors$ => {
             return errors$.pipe(
               scan(
-                ({ errorCount, error }, err) => {
+                ({ errorCount }, err) => {
                   return { errorCount: errorCount + 1, error: err };
                 },
                 { errorCount: 0, error: null }
@@ -120,25 +120,24 @@ export default function polling<T>(request$: Observable<T>, userOptions: IOption
 }
 
 function isPageActive(): boolean {
-  return !Boolean(document.hidden);
+  return !document.hidden;
 }
 
 function getStrategyDelay(consecutiveErrorsCount: number, options: IOptions): number {
   switch (options.backoffStrategy) {
     case 'exponential':
       return Math.pow(2, consecutiveErrorsCount - 1) * options.exponentialUnit;
-
     case 'random':
+      // eslint-disable-next-line no-case-declarations
       const [min, max] = options.randomRange;
+
+      // eslint-disable-next-line no-case-declarations
       const range = max - min;
       return Math.floor(Math.random() * range) + min;
-
     case 'consecutive':
       return options.constantTime || options.interval;
-
     default:
       console.error(`${options.backoffStrategy} is not a backoff strategy supported by rx-polling`);
-      // Return a value anyway to avoid throwing
       return options.constantTime || options.interval;
   }
 }
