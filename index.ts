@@ -36,7 +36,7 @@ export interface IOptions {
    * Range of milli-seconds to pick a random delay between error retries if 'random'
    * strategy is used.
    */
-  randomRange?: [number, number];
+  randomRange?: [number, number] | undefined;
 
   /**
    * Constant time to delay error retries if 'consecutive' strategy is used
